@@ -1,0 +1,16 @@
+{% extends 'social/base.html' %}
+
+{% block contents %}
+
+<h1>Signup</h1>
+    <form method="post" action={% url 'signup' %}>
+    {% csrf_token %}
+    {% for fm in form %}
+     {{ fm.label_tag }} {{fm}} {{fm.error|striptags}}
+    {% endfor %}
+    
+    <input type="submit" value="signup">
+    <input type="hidden" name="next" value="{{ next }}">
+</form>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'social/base.html' %}
+
+{% block contents %}
+
+{% if query %}
+<h3 class=mt-2>Search for "{{query }}"</h3> 
+<h4>{% with user.count as total_results %}
+    Found {{total_results}} result{{total_results|pluralize}}
+    {%endwith%}</h4>
+{%for x in user %}
+<a href=" " style=text-decoration:none;>{{x.username}} </a>
+<hr>
+{%endfor%}
+{% else %}
+<h4></h4>
+{% endif %}
+
+
+
+
+{% endblock %}

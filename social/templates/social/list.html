@@ -1,0 +1,51 @@
+{% extends 'social/base.html' %}
+
+{% block contents %}
+
+<h1>Feed</h1>
+{% if user.is_authenticated %}
+
+<form action="{% url 'search' %}" method="get">
+    <div class="input-group">
+      <input name="search"  type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+        aria-describedby="search-addon" />
+      <button type="submit" class="btn btn-outline-primary">search</button>
+    </div>
+  </form>
+
+  <div>
+    {% if query %}
+<h3 class=mt-2>Search for "{{query }}"</h3> 
+<h4>{% with user.count as total_results %}
+    Found {{total_results}} result{{total_results|pluralize}}
+    {%endwith%}</h4>
+{%for x in user %}
+<a href=" " style=text-decoration:none;>{{x.username}} </a>
+<hr>
+{%endfor%}
+{% else %}
+<h4></h4>
+{% endif %}
+  </div>
+
+
+
+    {% for post in posts %}
+        <p><em>@{{ post.created_by.username }}</em> <br>
+         <img src="{{ post.image.url }}" alt ="image" height="200px"> <br>  
+       <p>{{ post.contents }} </p> 
+        <em>{{ post.created_at|date:"SHORT_DATETIME_FORMAT" }}</em></p><hr>
+    {% endfor %}
+
+{% else %}
+{% for post in public_posts %}
+<p><em>@{{ post.created_by.username }}</em> <br>
+    <img src="{{ post.image.url }}" alt ="image" height="200px"> <br>  
+  <p>{{ post.contents }} </p>
+  <em>{{ post.created_at|date:"SHORT_DATETIME_FORMAT" }}</em></p> <hr>
+{% endfor %}
+{% endif %}
+ 
+<a href="{% url 'new_post' %}">New post</a>
+
+{% endblock %}
